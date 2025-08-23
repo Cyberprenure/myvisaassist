@@ -1,0 +1,97 @@
+export default function HomePage() {
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col items-center p-6">
+      {/* Header */}
+      <header className="w-full max-w-5xl flex justify-between items-center py-4">
+        <h1 className="text-2xl font-bold text-blue-700">MyVisaAssist</h1>
+        <span className="italic text-gray-500">Visa Made Easy</span>
+      </header>
+
+      {/* Hero Section */}
+      <section className="w-full max-w-3xl text-center mt-12">
+        <h2 className="text-4xl font-extrabold text-gray-800 mb-4">
+          Find Real-Time Visa Information
+        </h2>
+        <p className="text-lg text-gray-600 mb-6">
+          Search visa requirements for any country in seconds.
+        </p>
+        <input
+          type="text"
+          placeholder="🔎 Search your destination country..."
+          className="w-full px-4 py-3 rounded-2xl border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </section>
+
+      {/* Popular Regions */}
+      <section className="w-full max-w-4xl mt-16">
+        <h3 className="text-2xl font-semibold text-gray-700 mb-6 text-center">
+          🌍 Popular Regions
+        </h3>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 text-center">
+          {["Europe", "North America", "Middle East", "Asia", "Africa", "Oceania"].map(
+            (region) => (
+              <div
+                key={region}
+                className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg cursor-pointer"
+              >
+                <p className="font-semibold text-blue-600">{region}</p>
+              </div>
+            )
+          )}
+        </div>
+      </section>
+
+      {/* Updates */}
+      <section className="w-full max-w-3xl mt-16 text-center">
+        <h3 className="text-xl font-semibold text-gray-700 mb-2">
+          🕒 Real-Time Visa Updates
+        </h3>
+        <p className="text-gray-600 mb-2">Last updated: Aug 23, 2025</p>
+        <p className="text-gray-500 text-sm">
+          Direct sources: Official embassies, IATA, govt. portals
+        </p>
+      </section>
+
+      {/* FAQ */}
+      <section className="w-full max-w-3xl mt-16">
+        <h3 className="text-2xl font-semibold text-gray-700 mb-6 text-center">
+          ❓ Common Questions
+        </h3>
+        <ul className="space-y-4 text-gray-600">
+          <li>Do I need a visa for ___?</li>
+          <li>How long does approval take?</li>
+          <li>Can I get visa on arrival?</li>
+          <li>What documents are required?</li>
+        </ul>
+      </section>
+
+      {/* Subscribe */}
+      <section className="w-full max-w-2xl mt-16 text-center">
+        <h3 className="text-xl font-semibold text-gray-700 mb-3">
+          📩 Stay Updated
+        </h3>
+        <p className="text-gray-600 mb-4">
+          Get free updates on the latest visa changes.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <input
+            type="email"
+            placeholder="Enter your email"
+            className="px-4 py-3 rounded-2xl border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-2/3"
+          />
+          <button className="px-6 py-3 bg-blue-600 text-white rounded-2xl shadow hover:bg-blue-700 transition">
+            Subscribe
+          </button>
+        </div>
+      </section>
+
+      {/* Disclaimer */}
+      <footer className="w-full max-w-4xl mt-20 text-center text-sm text-gray-500 border-t pt-6">
+        <p>
+          ⚠️ MyVisaAssist provides visa guidance only. Always confirm with the
+          official embassy before applying.
+        </p>
+      </footer>
+    </div>
+  );
+}
