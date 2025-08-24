@@ -4,91 +4,86 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Visa Made Easy</title>
-  <!-- PicoCSS CDN -->
   <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
   <style>
     body {
-      background: #f8fafc;
-    }
-    header {
       text-align: center;
-      margin-bottom: 2rem;
     }
-    .country-card {
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    .country-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
     }
-    .country-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    .country-btn {
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
     }
-    .search-box {
-      margin-bottom: 2rem;
-      text-align: center;
+    #visa-info {
+      margin-top: 30px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background: #f9f9f9;
     }
   </style>
 </head>
 <body>
   <main class="container">
-    <header>
-      <h1>🌍 Visa Made Easy</h1>
-      <p>Your one-stop guide to visa requirements for every country</p>
-    </header>
+    <h1>🌍 Visa Made Easy</h1>
+    <p>Select a country to view visa information</p>
 
-    <!-- Search -->
-    <div class="search-box">
-      <input type="search" id="searchInput" placeholder="Search country..." aria-label="Search country">
+    <div class="country-list">
+      <button class="country-btn" onclick="showVisaInfo('USA')">USA</button>
+      <button class="country-btn" onclick="showVisaInfo('UK')">UK</button>
+      <button class="country-btn" onclick="showVisaInfo('Canada')">Canada</button>
+      <button class="country-btn" onclick="showVisaInfo('Australia')">Australia</button>
+      <button class="country-btn" onclick="showVisaInfo('Germany')">Germany</button>
+      <button class="country-btn" onclick="showVisaInfo('France')">France</button>
+      <button class="country-btn" onclick="showVisaInfo('Italy')">Italy</button>
+      <button class="country-btn" onclick="showVisaInfo('Japan')">Japan</button>
+      <button class="country-btn" onclick="showVisaInfo('Singapore')">Singapore</button>
+      <button class="country-btn" onclick="showVisaInfo('UAE')">UAE</button>
+      <button class="country-btn" onclick="showVisaInfo('India')">India</button>
+      <button class="country-btn" onclick="showVisaInfo('China')">China</button>
+      <button class="country-btn" onclick="showVisaInfo('Brazil')">Brazil</button>
+      <button class="country-btn" onclick="showVisaInfo('South Africa')">South Africa</button>
+      <button class="country-btn" onclick="showVisaInfo('Thailand')">Thailand</button>
     </div>
 
-    <!-- Country Grid -->
-    <div class="grid" id="countryList">
-      <!-- Cards injected via JS -->
+    <div id="visa-info">
+      <h3>Visa Information</h3>
+      <p>Select a country above to see details.</p>
     </div>
   </main>
 
   <script>
-    const countries = [
-      { name: "United States", visa: "Tourist Visa required. Apply via US Embassy.", link: "https://travel.state.gov/" },
-      { name: "United Kingdom", visa: "Tourist Visa required (Standard Visitor Visa).", link: "https://www.gov.uk/standard-visitor" },
-      { name: "Canada", visa: "ETA or Visitor Visa depending on nationality.", link: "https://www.canada.ca/en/immigration-refugees-citizenship.html" },
-      { name: "Australia", visa: "ETA or Visitor Visa required.", link: "https://immi.homeaffairs.gov.au/" },
-      { name: "Schengen (Europe)", visa: "Schengen Visa required for 26 countries.", link: "https://schengenvisainfo.com/" },
-      { name: "India", visa: "E-Visa available online.", link: "https://indianvisaonline.gov.in/" },
-      { name: "Singapore", visa: "E-Visa required for many nationalities.", link: "https://www.ica.gov.sg/" },
-      { name: "United Arab Emirates", visa: "Visa on Arrival for some nationalities.", link: "https://u.ae/en/information-and-services/visa-and-emirates-id" },
-      { name: "Japan", visa: "Tourist Visa required unless exempt.", link: "https://www.mofa.go.jp/" },
-      { name: "Thailand", visa: "Visa-free/On Arrival for many countries.", link: "https://www.thaievisa.go.th/" },
-      { name: "Malaysia", visa: "E-Visa/E-NTRI required for some countries.", link: "https://www.imi.gov.my/" },
-      { name: "China", visa: "Tourist Visa required.", link: "https://www.visaforchina.org/" },
-      { name: "Brazil", visa: "Visa-free for some nationalities, visa required for others.", link: "https://www.gov.br/mre/en" },
-      { name: "South Africa", visa: "Tourist Visa required unless exempt.", link: "http://www.dha.gov.za/" },
-      { name: "New Zealand", visa: "NZeTA required for many visitors.", link: "https://www.immigration.govt.nz/" }
-    ];
+    const visaDetails = {
+      "USA": "Tourist visa required. Apply online via DS-160 form and schedule interview.",
+      "UK": "Standard Visitor Visa required. Apply online, biometrics at VAC.",
+      "Canada": "Visitor visa required. Apply online with biometrics.",
+      "Australia": "Electronic Travel Authority (ETA) available online.",
+      "Germany": "Schengen Visa required. Submit at VFS center.",
+      "France": "Schengen Visa required. Apply via French consulate/VFS.",
+      "Italy": "Schengen Visa required for tourism/business visits.",
+      "Japan": "Tourist visa required. Apply via embassy or consulate.",
+      "Singapore": "E-Visa available. Apply through authorized agents.",
+      "UAE": "E-Visa available. Airlines & hotels also offer processing.",
+      "India": "E-Visa available online for tourism & business.",
+      "China": "Tourist visa required. Apply via embassy/consulate.",
+      "Brazil": "E-Visa available for some nationalities.",
+      "South Africa": "Visitor visa required. Apply online or embassy.",
+      "Thailand": "Visa on Arrival available for many nationalities."
+    };
 
-    const countryList = document.getElementById("countryList");
-    const searchInput = document.getElementById("searchInput");
-
-    function renderCountries(filter = "") {
-      countryList.innerHTML = "";
-      countries
-        .filter(c => c.name.toLowerCase().includes(filter.toLowerCase()))
-        .forEach(c => {
-          const card = document.createElement("article");
-          card.className = "country-card";
-          card.innerHTML = `
-            <h3>${c.name}</h3>
-            <p>${c.visa}</p>
-            <a href="${c.link}" target="_blank">Learn More</a>
-          `;
-          countryList.appendChild(card);
-        });
+    function showVisaInfo(country) {
+      document.getElementById("visa-info").innerHTML = `
+        <h3>${country} Visa Information</h3>
+        <p>${visaDetails[country]}</p>
+      `;
     }
-
-    searchInput.addEventListener("input", (e) => {
-      renderCountries(e.target.value);
-    });
-
-    // Initial render
-    renderCountries();
   </script>
 </body>
 </html>
