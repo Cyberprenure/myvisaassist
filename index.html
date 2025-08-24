@@ -4,42 +4,91 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Visa Made Easy</title>
+  <!-- PicoCSS CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; background: #f8f9fa; }
-    h1 { color: #2c3e50; }
-    input { padding: 10px; width: 300px; margin-top: 10px; }
-    button { padding: 10px; margin-left: 10px; cursor: pointer; }
-    #results { margin-top: 20px; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
+    body {
+      background: #f8fafc;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .country-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .country-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    }
+    .search-box {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
-  <h1>Visa Made Easy 🌍</h1>
-  <p>Get quick visa guidance for any country.</p>
-  
-  <input type="text" id="country" placeholder="Enter country name...">
-  <button onclick="searchVisa()">Search</button>
-  
-  <div id="results"></div>
+  <main class="container">
+    <header>
+      <h1>🌍 Visa Made Easy</h1>
+      <p>Your one-stop guide to visa requirements for every country</p>
+    </header>
+
+    <!-- Search -->
+    <div class="search-box">
+      <input type="search" id="searchInput" placeholder="Search country..." aria-label="Search country">
+    </div>
+
+    <!-- Country Grid -->
+    <div class="grid" id="countryList">
+      <!-- Cards injected via JS -->
+    </div>
+  </main>
 
   <script>
-    function searchVisa() {
-      let country = document.getElementById("country").value.toLowerCase();
-      let results = document.getElementById("results");
+    const countries = [
+      { name: "United States", visa: "Tourist Visa required. Apply via US Embassy.", link: "https://travel.state.gov/" },
+      { name: "United Kingdom", visa: "Tourist Visa required (Standard Visitor Visa).", link: "https://www.gov.uk/standard-visitor" },
+      { name: "Canada", visa: "ETA or Visitor Visa depending on nationality.", link: "https://www.canada.ca/en/immigration-refugees-citizenship.html" },
+      { name: "Australia", visa: "ETA or Visitor Visa required.", link: "https://immi.homeaffairs.gov.au/" },
+      { name: "Schengen (Europe)", visa: "Schengen Visa required for 26 countries.", link: "https://schengenvisainfo.com/" },
+      { name: "India", visa: "E-Visa available online.", link: "https://indianvisaonline.gov.in/" },
+      { name: "Singapore", visa: "E-Visa required for many nationalities.", link: "https://www.ica.gov.sg/" },
+      { name: "United Arab Emirates", visa: "Visa on Arrival for some nationalities.", link: "https://u.ae/en/information-and-services/visa-and-emirates-id" },
+      { name: "Japan", visa: "Tourist Visa required unless exempt.", link: "https://www.mofa.go.jp/" },
+      { name: "Thailand", visa: "Visa-free/On Arrival for many countries.", link: "https://www.thaievisa.go.th/" },
+      { name: "Malaysia", visa: "E-Visa/E-NTRI required for some countries.", link: "https://www.imi.gov.my/" },
+      { name: "China", visa: "Tourist Visa required.", link: "https://www.visaforchina.org/" },
+      { name: "Brazil", visa: "Visa-free for some nationalities, visa required for others.", link: "https://www.gov.br/mre/en" },
+      { name: "South Africa", visa: "Tourist Visa required unless exempt.", link: "http://www.dha.gov.za/" },
+      { name: "New Zealand", visa: "NZeTA required for many visitors.", link: "https://www.immigration.govt.nz/" }
+    ];
 
-      // Example data (later we’ll connect to real API)
-      let data = {
-        "usa": "Visa required: Tourist, Student, Work. Apply at embassy or online (ESTA for short visits).",
-        "uk": "Visa required for most. Categories: Tourist, Student, Skilled Worker. Apply online at gov.uk.",
-        "canada": "Most travelers need eTA or visa. Apply online at cic.gc.ca.",
-        "india": "E-Visa available for 150+ countries. Categories: Tourist, Business, Medical."
-      };
+    const countryList = document.getElementById("countryList");
+    const searchInput = document.getElementById("searchInput");
 
-      if(data[country]) {
-        results.innerHTML = `<h3>${country.toUpperCase()}</h3><p>${data[country]}</p>`;
-      } else {
-        results.innerHTML = `<p>❌ Sorry, no data available for "${country}".</p>`;
-      }
+    function renderCountries(filter = "") {
+      countryList.innerHTML = "";
+      countries
+        .filter(c => c.name.toLowerCase().includes(filter.toLowerCase()))
+        .forEach(c => {
+          const card = document.createElement("article");
+          card.className = "country-card";
+          card.innerHTML = `
+            <h3>${c.name}</h3>
+            <p>${c.visa}</p>
+            <a href="${c.link}" target="_blank">Learn More</a>
+          `;
+          countryList.appendChild(card);
+        });
     }
+
+    searchInput.addEventListener("input", (e) => {
+      renderCountries(e.target.value);
+    });
+
+    // Initial render
+    renderCountries();
   </script>
 </body>
 </html>
