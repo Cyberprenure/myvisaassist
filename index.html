@@ -3,83 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Visa Assist 🌍</title>
+  <title>Visa Made Easy</title>
   <style>
-    body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background: #f4f8fb; color: #333; }
-    header { background: #0066cc; color: #fff; padding: 30px; text-align: center; }
-    header h1 { margin: 0; font-size: 36px; }
-    header p { margin: 10px 0 0; font-size: 18px; }
-
-    nav { background: #004a99; padding: 10px; text-align: center; }
-    nav a { color: #fff; text-decoration: none; margin: 0 15px; font-weight: bold; }
-    nav a:hover { text-decoration: underline; }
-
-    section { padding: 50px 20px; max-width: 1000px; margin: auto; }
-    h2 { color: #0066cc; margin-bottom: 20px; }
-
-    .card { background: #fff; border-radius: 12px; padding: 20px; margin: 20px 0; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-
-    .search-box { margin: 30px auto; max-width: 400px; text-align: center; }
-    .search-box input { padding: 10px; width: 80%; border-radius: 8px; border: 1px solid #ccc; }
-    .search-box button { padding: 10px 20px; border: none; border-radius: 8px; background: #0066cc; color: #fff; cursor: pointer; }
-    .search-box button:hover { background: #004a99; }
-
-    footer { background: #0066cc; color: #fff; text-align: center; padding: 20px; margin-top: 40px; }
+    body { font-family: Arial, sans-serif; margin: 40px; background: #f8f9fa; }
+    h1 { color: #2c3e50; }
+    input { padding: 10px; width: 300px; margin-top: 10px; }
+    button { padding: 10px; margin-left: 10px; cursor: pointer; }
+    #results { margin-top: 20px; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
   </style>
 </head>
 <body>
+  <h1>Visa Made Easy 🌍</h1>
+  <p>Get quick visa guidance for any country.</p>
+  
+  <input type="text" id="country" placeholder="Enter country name...">
+  <button onclick="searchVisa()">Search</button>
+  
+  <div id="results"></div>
 
-  <!-- Header -->
-  <header>
-    <h1>🌍 My Visa Assist</h1>
-    <p>Your trusted partner for visa updates, rules & travel guides</p>
-  </header>
+  <script>
+    function searchVisa() {
+      let country = document.getElementById("country").value.toLowerCase();
+      let results = document.getElementById("results");
 
-  <!-- Navigation -->
-  <nav>
-    <a href="#updates">Visa Updates</a>
-    <a href="#search">Search</a>
-    <a href="#contact">Contact</a>
-  </nav>
+      // Example data (later we’ll connect to real API)
+      let data = {
+        "usa": "Visa required: Tourist, Student, Work. Apply at embassy or online (ESTA for short visits).",
+        "uk": "Visa required for most. Categories: Tourist, Student, Skilled Worker. Apply online at gov.uk.",
+        "canada": "Most travelers need eTA or visa. Apply online at cic.gc.ca.",
+        "india": "E-Visa available for 150+ countries. Categories: Tourist, Business, Medical."
+      };
 
-  <!-- Visa Updates Section -->
-  <section id="updates">
-    <h2>📢 Latest Visa Updates</h2>
-    <div class="card">
-      <p><strong>USA:</strong> Work visa appointments are open for 2025. Apply early to avoid delays.</p>
-    </div>
-    <div class="card">
-      <p><strong>Canada:</strong> Student visa processing time reduced to 6 weeks.</p>
-    </div>
-    <div class="card">
-      <p><strong>Australia:</strong> Tourist visas now allow up to 12 months stay for select countries.</p>
-    </div>
-    <p><em>🔄 More updates coming soon...</em></p>
-  </section>
-
-  <!-- Search Section -->
-  <section id="search">
-    <h2>🔎 Search Visa Info</h2>
-    <div class="search-box">
-      <input type="text" placeholder="Enter country name...">
-      <button>Search</button>
-    </div>
-    <p><em>(Search feature coming soon 🚀)</em></p>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact">
-    <h2>📬 Contact Us</h2>
-    <div class="card">
-      <p>Email: <a href="mailto:support@myvisaassist.com">support@myvisaassist.com</a></p>
-      <p>Follow us: 🌐 Coming soon on social media</p>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 My Visa Assist | All Rights Reserved</p>
-  </footer>
-
+      if(data[country]) {
+        results.innerHTML = `<h3>${country.toUpperCase()}</h3><p>${data[country]}</p>`;
+      } else {
+        results.innerHTML = `<p>❌ Sorry, no data available for "${country}".</p>`;
+      }
+    }
+  </script>
 </body>
 </html>
